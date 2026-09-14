@@ -1,0 +1,16 @@
+{
+  "id": "/",
+  "name": "LucaRice",
+  "short_name": "LucaRice",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/lucarice-logo.png",
+      "sizes": "1280x1280",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

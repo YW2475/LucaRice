@@ -1,0 +1,253 @@
+.page {
+  width: min(720px, 100%);
+  padding: 8px 0 40px;
+  display: grid;
+  gap: 20px;
+  color: var(--dsw-alias-label-primary);
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--dsw-alias-bg-layer-1) 72%, #5c8d68 28%);
+}
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #5c8d68;
+  color: #fff;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.profileText { min-width: 0; flex: 1; }
+.profileName { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 18px; font-weight: 650; }
+.profileMeta { margin-top: 4px; color: var(--dsw-alias-label-secondary); font-size: 13px; }
+.role { flex: none; padding: 5px 10px; border-radius: 999px; background: #5c8d6826; color: #111; font-size: 13px; }
+
+.card {
+  padding: 20px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 16px;
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.cardHeader { margin-bottom: 16px; }
+.cardTitle { font-size: 16px; font-weight: 650; }
+.cardHint { margin-top: 5px; color: var(--dsw-alias-label-secondary); font-size: 13px; }
+.form { display: grid; gap: 12px; }
+.field { display: grid; gap: 7px; }
+.fieldLabel { color: var(--dsw-alias-label-secondary); font-size: 13px; }
+
+.control {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  box-sizing: border-box;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  outline: none;
+  background: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+}
+
+.control:focus { border-color: #6cab78; box-shadow: 0 0 0 3px #5c8d6833; }
+.actions { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+
+.primary {
+  height: 36px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 9px;
+  background: #5c8d68;
+  color: #fff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary:hover { background: #6b9e77; }
+.userList { display: grid; gap: 8px; margin: 0 0 18px; }
+.userRow { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: var(--dsw-alias-bg-layer-2); }
+.miniAvatar { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; background: #5c8d68; color: #fff; font-size: 12px; font-weight: 700; }
+.userName { flex: 1; font-size: 14px; }
+.userRole { color: var(--dsw-alias-label-secondary); font-size: 13px; }
+.userDisabled { color: #ef8b6b; font-size: 13px; }
+.secondary {
+  height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--dsw-alias-label-primary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.secondary:hover { background: var(--dsw-alias-bg-layer-1); }
+.serviceGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.serviceRow { display: flex; align-items: center; gap: 9px; padding: 11px 12px; border-radius: 10px; background: var(--dsw-alias-bg-layer-2); }
+.statusOnline, .statusOffline { width: 8px; height: 8px; border-radius: 50%; }
+.statusOnline { background: #65b978; }
+.statusOffline { background: #e36a6a; }
+.serviceOnline { color: #79bd88; font-size: 13px; }
+.serviceOffline { color: #e57a7a; font-size: 13px; }
+@media (max-width: 640px) { .serviceGrid { grid-template-columns: 1fr; } }
+.notice { padding: 10px 12px; border-radius: 10px; background: #5c8d681f; color: #9fd6aa; font-size: 14px; }
+
+.logout {
+  justify-self: start;
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: #ef6b6b;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.footer {
+  position: relative;
+  width: 100%;
+}
+
+.footerCompact {
+  width: 36px;
+}
+
+.footerMenu {
+  position: absolute;
+  z-index: 10;
+  bottom: 48px;
+  left: 0;
+  width: 220px;
+  padding: 8px;
+  border-radius: 14px;
+  background: #343436;
+  box-shadow: 0 12px 32px #0008;
+}
+
+.footerMenuAction {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.footerMenuAction:hover {
+  background: rgb(255 255 255 / 10%);
+}
+
+.footerButton {
+  width: 100%;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.footerButtonCompact {
+  padding: 0;
+}
+
+.footerAvatar {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #5c8d68;
+  color: #fff;
+  font-weight: 650;
+}
+
+.footerName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+  font-size: 14px;
+}
+
+/* Account controls had an inline dark menu. Keep that menu in dark mode, but
+   give the light appearance a readable light surface of its own. */
+:global(body:not([data-ds-dark-theme])) .footerMenu {
+  border: 1px solid rgb(81 127 86 / 20%);
+  background: rgb(250 255 250 / 96%);
+  box-shadow: 0 12px 32px rgb(47 85 51 / 18%);
+  color: #244128;
+}
+
+:global(body:not([data-ds-dark-theme])) .footerMenuAction:hover {
+  background: #e5f4e2;
+}
+
+:global(body:not([data-ds-dark-theme])) .footerButton:hover {
+  background: rgb(224 243 220 / 74%);
+}
+
+@media (max-width: 640px) {
+  .page {
+    gap: 14px;
+    padding-bottom: 24px;
+  }
+
+  .profile,
+  .card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .profile {
+    align-items: flex-start;
+  }
+
+  .role {
+    padding: 4px 8px;
+  }
+
+  .userRow {
+    flex-wrap: wrap;
+  }
+
+  .userName {
+    min-width: 120px;
+  }
+
+  .control {
+    height: 44px;
+    font-size: 16px;
+  }
+
+  .primary,
+  .secondary {
+    min-height: 40px;
+  }
+}

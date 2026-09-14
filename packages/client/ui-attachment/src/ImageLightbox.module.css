@@ -1,0 +1,62 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 40px;
+}
+
+/* Same mask recipe as the Modal primitive and the settings dialog. A separate
+   layer, not a background on .backdrop: backdrop-filter there would blur the
+   previewed image and the close control along with the page. */
+.mask {
+  position: absolute;
+  inset: 0;
+  background: var(--dsw-alias-bg-mask-1);
+  backdrop-filter: var(--dsw-mask-blur);
+}
+
+.image {
+  position: relative;
+  max-width: min(100%, 1600px);
+  max-height: calc(100vh - 80px);
+  object-fit: contain;
+  border-radius: 12px;
+  background: var(--dsw-specific-input-major);
+  box-shadow: var(--dsw-shadow-lv3);
+}
+
+.close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--dsw-alias-border-l2-darkmode-thin);
+  border-radius: 999px;
+  background: var(--dsw-specific-input-major);
+  color: var(--dsw-alias-label-primary);
+  cursor: pointer;
+}
+
+@media (max-width: 720px) {
+  .backdrop {
+    padding: calc(64px + env(safe-area-inset-top)) 10px calc(20px + env(safe-area-inset-bottom));
+  }
+
+  .image {
+    max-height: calc(100dvh - 84px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    border-radius: 8px;
+  }
+
+  .close {
+    top: calc(12px + env(safe-area-inset-top));
+    right: 12px;
+    width: 42px;
+    height: 42px;
+  }
+}

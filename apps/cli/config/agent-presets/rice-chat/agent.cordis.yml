@@ -1,0 +1,66 @@
+# The production preset deliberately registers no model-facing tools. Image
+# attachments remain ordinary user-message content and do not require a tool.
+- id: persona
+  name: '@deepseek-ai/dsh-persona'
+  config:
+    text: !!js "process.getBuiltinModule('node:fs').readFileSync(new URL('SYSTEM_PROMPT.md', baseUrl), 'utf8')"
+    complete: true
+    includeRuntimeContext: false
+
+- id: rice-tools
+  name: ./rice-tools.ts
+  config:
+    endpoint: http://127.0.0.1:8765
+    readyFile: !!js process.cwd() + '/.rice-rag-venv/rice-retriever.ready'
+    domains:
+      - id: cultivation
+        tool: search_rice_cultivation
+        description: Search cultivation and growth-stage management evidence.
+      - id: water_fertilizer
+        tool: search_rice_water_fertilizer
+        description: Search water, fertilizer, and soil-management evidence.
+      - id: pest_disease
+        tool: search_rice_pest_disease
+        description: Search rice pest, disease, weed, and prevention evidence.
+      - id: abiotic_stress
+        tool: search_rice_abiotic_stress
+        description: Search weather-disaster and abiotic-stress evidence.
+      - id: harvest_quality
+        tool: search_rice_harvest_quality
+        description: Search maturity, harvest, storage, and quality evidence.
+      - id: variety_seed
+        tool: search_rice_variety_seed
+        description: Search rice variety selection and seed-production evidence.
+
+- id: rice-time-context
+  name: ./rice-time-context.ts
+  config:
+    endpoint: https://timeapi.io/api/time/current/zone
+    timeZone: Asia/Shanghai
+
+- id: rice-language-context
+  name: ./rice-language-context.ts
+
+- id: ask-rice-questions
+  name: '@deepseek-ai/dsh-tool-ask-user'
+
+- id: deterministic-tools
+  name: ./deterministic-tools.ts
+  config:
+    endpoint: http://127.0.0.1:8766
+
+- id: field-management
+  name: ./field-sensor.ts
+  config:
+    endpoint: http://127.0.0.1:8768
+
+- id: field-imagery-context
+  name: ./field-imagery-context.ts
+
+- id: field-weather
+  name: ./field-weather.ts
+  config:
+    endpoint: http://127.0.0.1:8769
+
+- id: document-tools
+  name: ./document-tools.ts

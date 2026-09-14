@@ -1,0 +1,112 @@
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  position: relative;
+  overflow: hidden;
+}
+
+.root[data-state='running'] .row::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 0;
+  width: 300px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--dsw-alias-bg-base) 60%, transparent) 55%,
+    transparent 100%
+  );
+  animation: dsh-reasoning-row-sweep 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes dsh-reasoning-row-sweep {
+  0% { left: -300px; }
+  90%, 100% { left: 100%; }
+}
+
+.leading {
+  flex-shrink: 0;
+}
+
+.chevron {
+  color: var(--dsw-alias-label-secondary);
+}
+
+.title {
+  font-weight: 400;
+}
+
+.separator {
+  flex: none;
+  width: 2px;
+  height: 2px;
+  margin: 0 8px;
+  border-radius: 1px;
+  background: var(--dsw-alias-label-caption);
+}
+
+.summary {
+  min-width: 0;
+  overflow: hidden;
+  flex: 1 1 auto;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 14px;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summary[data-follow-end] {
+  text-overflow: clip;
+}
+
+.thinkBody {
+  padding: 4px 0 4px 22px;
+  color: var(--dsw-alias-label-tertiary);
+  font-size: 14px;
+  line-height: 24px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Reasoning remains available, but reads as process metadata rather than the
+   response itself in the light workspace. */
+:global(body:not([data-ds-dark-theme])) .row {
+  min-height: 20px;
+  color: #7a8580;
+}
+
+:global(body:not([data-ds-dark-theme])) .leading {
+  transform: scale(0.84);
+  transform-origin: left center;
+}
+
+:global(body:not([data-ds-dark-theme])) .title,
+:global(body:not([data-ds-dark-theme])) .summary {
+  color: #7a8580;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+:global(body:not([data-ds-dark-theme])) .separator {
+  margin: 0 6px;
+  background: #9aa49f;
+}
+
+:global(body:not([data-ds-dark-theme])) .thinkBody {
+  padding: 2px 0 2px 18px;
+  color: #7a8580;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .root[data-state='running'] .row::after {
+    animation: none;
+  }
+}

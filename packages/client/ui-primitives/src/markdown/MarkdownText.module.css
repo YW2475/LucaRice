@@ -1,0 +1,388 @@
+/* Visual baseline: deepsuite `@deepseek/md` markdown.css, adapted to CSS
+   Modules. Cite pills, header anchors, and thinking-small variants are
+   intentionally absent (no matching DOM). Token names match that sheet. */
+
+.markdown {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font: var(--dsw-font-markdown-base);
+  color: var(--dsw-alias-label-primary);
+}
+
+.markdown strong {
+  font-weight: 600;
+}
+
+.markdown h1 {
+  font: var(--dsw-font-markdown-h1);
+  margin: 32px 0 16px;
+}
+
+.markdown h2 {
+  font: var(--dsw-font-markdown-h2);
+  margin: 32px 0 16px;
+}
+
+.markdown h3 {
+  font: var(--dsw-font-markdown-h3);
+  margin: 32px 0 16px;
+}
+
+.markdown h4 {
+  font: var(--dsw-font-markdown-h4);
+  margin: 16px 0;
+}
+
+.markdown :where(h5, h6) {
+  font: var(--dsw-font-markdown-base-strong);
+  margin: 16px 0;
+}
+
+.markdown :where(h1, h2, h3, h4, h5, h6) strong {
+  font-weight: inherit;
+}
+
+.markdown p {
+  margin: 16px 0;
+}
+
+/* Tighten h4–h6 against a following list (design: 8px gap). */
+.markdown :where(h4, h5, h6) + :where(ul, ol) {
+  margin-top: 8px;
+}
+
+.markdown :where(h4, h5, h6):has(+ :where(ul, ol)) {
+  margin-bottom: 8px;
+}
+
+.markdown a {
+  /* deepsuite markdown.css uses brand-text (blue in newDesign); this sheet
+     keeps design-platform brand-text as near-black, so links use the blue
+     business-primary alias instead. */
+  color: var(--dsw-alias-state-business-primary);
+  transition: box-shadow var(--ds-transition-duration) var(--ds-ease-in-out);
+  position: relative;
+  text-decoration: none;
+  /* Transparent hit-area padding; literal zero-alpha only (no painted color). */
+  border-left: 3px solid rgb(255 255 255 / 0);
+  border-right: 3px solid rgb(255 255 255 / 0);
+  border-top: 2px solid rgb(255 255 255 / 0);
+  border-bottom: 2px solid rgb(255 255 255 / 0);
+  margin-left: -3px;
+  margin-right: -3px;
+}
+
+.markdown a:hover,
+.markdown a:focus {
+  outline: none;
+  text-decoration: underline var(--dsw-alias-state-business-primary);
+}
+
+.markdown a:focus-visible {
+  box-shadow: 0 0 0 2px var(--dsw-alias-state-business-primary);
+}
+
+.markdown :where(ul, ol) {
+  margin: 16px 0;
+  padding-left: 18px;
+}
+
+.markdown li:not(:first-child) {
+  margin-top: 6px;
+}
+
+.markdown li > :where(ul, ol) {
+  margin-top: 4px;
+}
+
+.markdown li::marker {
+  line-height: 28px;
+  color: var(--dsw-alias-label-secondary);
+}
+
+/* Nested ol under ul/ol: markers inside (models sometimes emit this shape). */
+.markdown :where(ul, ol) ol {
+  list-style-position: inside;
+  padding-left: 0;
+}
+
+.markdown :where(ul, ol) ol li p {
+  display: inline;
+}
+
+.markdown li > p {
+  margin: 8px 0;
+}
+
+.markdown li > *:first-child {
+  margin-top: 0;
+}
+
+/* Keep list-nested code-block vertical margins (design: +4px vs other last children). */
+.markdown li > *:last-child:not(:global(.md-code-block)) {
+  margin-bottom: 0;
+}
+
+.markdown hr {
+  display: block;
+  border: none;
+  height: 1px;
+  margin: 32px 0;
+  background: var(--dsw-alias-border-l2);
+}
+
+.markdown blockquote {
+  border-left: 2px solid var(--dsw-alias-label-caption);
+  margin: 16px 0 0;
+  padding-left: 14px;
+}
+
+.markdown pre {
+  margin: 16px 0;
+  font-family: var(--ds-font-family-code);
+  overflow: auto;
+}
+
+.markdown :not(pre) > code {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  font: var(--dsw-font-markdown-code);
+  font-family: var(--ds-font-family-code);
+  font-size: 0.875em !important;
+  background-color: var(--dsw-alias-markdown-inline-code);
+  border-radius: 6px;
+  padding: 0 5px;
+}
+
+.markdown :where(h1, h2, h3, h4, h5, h6) code {
+  font: inherit;
+  font-family: var(--ds-font-family-code);
+}
+
+.markdown :global(.katex-display) {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.markdown input[type='checkbox'] {
+  margin: 0 8px 0 0;
+  accent-color: var(--dsw-alias-label-secondary);
+}
+
+.tableScroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.tableScroll table {
+  border-collapse: collapse;
+  width: max-content;
+  max-width: max-content;
+}
+
+.tableScroll th {
+  text-align: start;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--dsw-alias-border-l3);
+  border-top: none;
+  font: var(--dsw-font-markdown-table-head);
+  max-width: 320px;
+  max-width: min(30vw, 320px);
+  min-width: 100px;
+}
+
+.tableScroll td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--dsw-alias-border-l2);
+  font: var(--dsw-font-markdown-table);
+  max-width: 320px;
+  max-width: min(30vw, 320px);
+  min-width: 100px;
+}
+
+.tableScroll th:first-child,
+.tableScroll td:first-child {
+  padding-left: 0;
+}
+
+.tableScroll td:last-child {
+  padding-right: 0;
+}
+
+.tableScroll table code {
+  font-size: 13px;
+}
+
+.markdown > *:first-child,
+.markdown p:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown > *:last-child,
+.markdown p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.imageAlt {
+  color: var(--dsw-alias-label-tertiary);
+  font-style: italic;
+}
+
+.image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  border-radius: 8px;
+  background: var(--dsw-alias-bg-base);
+  object-fit: contain;
+}
+
+/* Inline file mention: the same link language this sheet gives anchors (and
+   thereby URL-promoted inline code) — link-blue at rest, underline only on
+   hover/focus. An underline at rest reads badly inside the code chip, where
+   it collides with monospace descenders and the pill background. */
+.fileMention {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--dsw-alias-state-business-primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.fileMention:hover,
+.fileMention:focus {
+  outline: none;
+  text-decoration: underline var(--dsw-alias-state-business-primary);
+  text-underline-offset: 3px;
+}
+
+/* The light LucaRice workspace is read more like an editorial result page:
+   quieter surface, deliberate headline rhythm, and generous prose breathing
+   room. Dark-mode typography continues to use the base design tokens. */
+:global(body:not([data-ds-dark-theme])) .markdown {
+  color: #1d2920;
+  font-size: 16px;
+  line-height: 31px;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown strong {
+  color: #183d20;
+  font-weight: 650;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown h1 {
+  margin: 38px 0 18px;
+  color: #17351c;
+  font-size: 28px;
+  font-weight: 720;
+  line-height: 36px;
+  letter-spacing: -0.02em;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown h2 {
+  margin: 32px 0 16px;
+  color: #1c3d22;
+  font-size: 22px;
+  font-weight: 680;
+  line-height: 31px;
+  letter-spacing: -0.015em;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown h3 {
+  margin: 28px 0 14px;
+  color: #25442a;
+  font-size: 18px;
+  font-weight: 660;
+  line-height: 27px;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown :where(h4, h5, h6) {
+  margin: 22px 0 12px;
+  color: #2d4a31;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown p {
+  margin: 18px 0;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown :where(ul, ol) {
+  margin: 20px 0;
+  padding-left: 22px;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown li:not(:first-child) {
+  margin-top: 10px;
+}
+
+:global(body:not([data-ds-dark-theme])) .markdown li::marker {
+  color: #6e9773;
+}
+
+@media (max-width: 720px) {
+  .markdown {
+    font-size: 16px;
+    line-height: 28px;
+  }
+
+  .markdown h1 {
+    margin: 26px 0 12px;
+  }
+
+  .markdown :where(h2, h3) {
+    margin: 24px 0 12px;
+  }
+
+  .markdown :where(h4, h5, h6),
+  .markdown p,
+  .markdown :where(ul, ol) {
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+
+  .markdown :where(ul, ol) {
+    padding-left: 20px;
+  }
+
+  .markdown li:not(:first-child) {
+    margin-top: 4px;
+  }
+
+  :global(body:not([data-ds-dark-theme])) .markdown {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  :global(body:not([data-ds-dark-theme])) .markdown h1 {
+    margin: 30px 0 16px;
+    font-size: 26px;
+    line-height: 34px;
+  }
+
+  :global(body:not([data-ds-dark-theme])) .markdown h2 {
+    margin: 26px 0 14px;
+    font-size: 21px;
+    line-height: 30px;
+  }
+
+  :global(body:not([data-ds-dark-theme])) .markdown h3 {
+    margin: 24px 0 12px;
+  }
+
+  :global(body:not([data-ds-dark-theme])) .markdown p,
+  :global(body:not([data-ds-dark-theme])) .markdown :where(ul, ol) {
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  :global(body:not([data-ds-dark-theme])) .markdown li:not(:first-child) {
+    margin-top: 8px;
+  }
+}

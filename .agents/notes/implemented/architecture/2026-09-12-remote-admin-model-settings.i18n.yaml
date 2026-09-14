@@ -1,0 +1,6 @@
+# Bilingual-pair consistency record (docs/i18n/README.md): the git blob hash of each
+# side as of the last confirmed-consistent state. Both languages carry equal authority;
+# after editing either side, bring the other along and re-record with:
+#   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-12-remote-admin-model-settings.md
+2026-09-12-remote-admin-model-settings.md: 884e627e34811e2bef57cc60f3459970398cede3
+2026-09-12-remote-admin-model-settings.zh.md: 908f3f8e338e460e5b26d12e06f264f67db83369
