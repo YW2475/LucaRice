@@ -91,6 +91,7 @@ async function mounted(config?: ConnectionConfig, account?: AccountUser): Promis
       ownsSession: () => true,
       claimSession: () => {},
       ownerForSession: () => account.id,
+      localeForSession: () => 'zh',
       archivedSessionIds: () => [],
       archiveSession: () => [],
       userDataDir: () => '',

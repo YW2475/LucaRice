@@ -6,6 +6,8 @@ The dsh browser-surface bundle. [`cordis.patch.yml`](cordis.patch.yml) rides ove
 
 The LucaRice Web composition mounts account ownership independently from its local RAG, deterministic, speech, field, and weather processes. Each business process may stop without removing login or the other capabilities. Model credentials, field records, and generated exports resolve through the authenticated account; the knowledge packages and inference models remain shared read-only resources.
 
+The account service stores each user's selected reply language (`zh`, `en`, or `fr`) in the LucaRice SQLite database. The authenticated `/_lucarice/auth/locale` endpoint reads and updates only the current account's preference; the rice-chat language plugin reads it through the owning session before adding its reply-language instruction.
+
 ## Model Experience
 
 ### Harness-source and Web-surface context

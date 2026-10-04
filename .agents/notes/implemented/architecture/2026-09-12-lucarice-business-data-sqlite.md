@@ -12,6 +12,8 @@ LucaRice stored account records, browser login sessions, field profiles, and far
 
 LucaRice keeps its business records in `.lucarice-data/lucarice.sqlite3`. The account plugin owns account, login-session, chat-ownership, and archived-chat rows. The field-management plugin owns field-profile and farm-event rows in the same database, and the field-weather plugin reads those field-profile rows. Both connections use SQLite WAL mode and a five-second busy timeout.
 
+The account plugin also owns per-account reply-language rows, so a browser language choice never changes another user's model instructions.
+
 On first use, the account plugin imports `accounts.json` when the database has no accounts. The field plugin imports each user's existing `fields/*/field.json` and `events.json` files once. The JSON files remain untouched as recovery sources and are not used for subsequent writes.
 
 Harness session logs, model credential files, knowledge packages, and image assets retain their existing storage mechanisms. This keeps LucaRice business storage separate from the vendored Harness and leaves model secrets outside the ordinary business database.

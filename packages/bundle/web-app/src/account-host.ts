@@ -72,6 +72,10 @@ export class LucaRiceAccounts extends Service implements AccountService {
         session_id TEXT NOT NULL,
         PRIMARY KEY (user_id, session_id)
       ) STRICT;
+      CREATE TABLE IF NOT EXISTS account_locales (
+        user_id TEXT PRIMARY KEY REFERENCES accounts(id) ON DELETE CASCADE,
+        preference TEXT NOT NULL CHECK (preference IN ('zh', 'en', 'fr'))
+      ) STRICT;
     `)
     this.importLegacyAccounts(join(config.dataRoot, 'accounts.json'))
   }
@@ -126,6 +130,12 @@ export class LucaRiceAccounts extends Service implements AccountService {
 
   ownerForSession(sessionId: string): string | undefined {
     return (this.db.prepare('SELECT user_id FROM chat_session_owners WHERE session_id = ?').get(sessionId) as { user_id: string } | undefined)?.user_id ?? this.firstUserId()
+  }
+
+  localeForSession(sessionId: string): 'zh' | 'en' | 'fr' {
+    const owner = this.ownerForSession(sessionId)
+    if (owner === undefined) return 'zh'
+    return (this.db.prepare('SELECT preference FROM account_locales WHERE user_id = ?').get(owner) as { preference: 'zh' | 'en' | 'fr' } | undefined)?.preference ?? 'zh'
   }
 
   archivedSessionIds(userId: string): string[] {
@@ -186,6 +196,13 @@ export class LucaRiceAccounts extends Service implements AccountService {
       reply(response, user === undefined ? 401 : 200, user === undefined ? { error: '未登录', initialized: this.accountCount() > 0 } : { user, initialized: true })
       return
     }
+    if (request.method === 'GET' && path === '/_lucarice/auth/locale') {
+      const user = this.userForRequest(request)
+      if (user === undefined) { reply(response, 401, { error: '未登录' }); return }
+      const preference = (this.db.prepare('SELECT preference FROM account_locales WHERE user_id = ?').get(user.id) as { preference: string } | undefined)?.preference
+      reply(response, 200, { userId: user.id, preference: preference ?? null })
+      return
+    }
     if (request.method === 'GET' && path === '/_lucarice/auth/services') {
       const user = this.userForRequest(request)
       if (user?.role !== 'admin') { reply(response, 403, { error: '仅管理员可查看服务状态' }); return }
@@ -203,7 +220,15 @@ export class LucaRiceAccounts extends Service implements AccountService {
     request.on('data', chunk => { chunks.push(Buffer.from(chunk)) })
     request.on('end', () => {
       try {
-        const body = chunks.length === 0 ? {} : JSON.parse(Buffer.concat(chunks).toString('utf8')) as { username?: string; password?: string }
+        const body = chunks.length === 0 ? {} : JSON.parse(Buffer.concat(chunks).toString('utf8')) as { username?: string; password?: string; preference?: string }
+        if (request.method === 'POST' && path === '/_lucarice/auth/locale') {
+          const user = this.userForRequest(request)
+          if (user === undefined) { reply(response, 401, { error: '未登录' }); return }
+          if (body.preference !== 'zh' && body.preference !== 'en' && body.preference !== 'fr') throw new Error('不支持的语言')
+          this.db.prepare('INSERT INTO account_locales (user_id, preference) VALUES (?, ?) ON CONFLICT(user_id) DO UPDATE SET preference = excluded.preference').run(user.id, body.preference)
+          reply(response, 200, { preference: body.preference })
+          return
+        }
         if (request.method === 'POST' && path === '/_lucarice/auth/bootstrap') {
           if (this.accountCount() > 0) throw new Error('账户已初始化')
           const user = this.create(body.username ?? '', body.password ?? '', 'admin')

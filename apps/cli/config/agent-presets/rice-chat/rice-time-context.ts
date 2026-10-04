@@ -1,4 +1,4 @@
-/** Adds the current China time from the configured public API to every model request. @module rice-time-context */
+/** Adds the current China time from the configured public API once per turn. @module rice-time-context */
 
 import type { Context } from '@deepseek-ai/cordis'
 import type { PreStepDecision } from '@deepseek-ai/dsh-agent'
@@ -10,17 +10,17 @@ export const name = 'rice-time-context'
 /** The agent registry supplies request preparation. */
 export const inject = ['agents']
 
-/** Public time API and zone sent with each request. */
+/** Public time API and zone used on the first step of each turn. */
 export interface Config {
   endpoint: string
   timeZone: string
 }
 
-/** Read one external time value and append it to the request history. */
+/** Read one external time value at the start of each turn. */
 export function apply(ctx: Context, config: Config): void {
-  ctx.on('agent/pre-step', async ({ signal }, next): Promise<PreStepDecision> => {
+  ctx.on('agent/pre-step', async ({ step, signal }, next): Promise<PreStepDecision> => {
     const decision = await next()
-    if (decision.kind === 'reject' || signal.aborted) return decision
+    if (decision.kind === 'reject' || signal.aborted || step !== 1) return decision
     let value: { dateTime: string }
     try {
       const response = await fetch(`${config.endpoint}?timeZone=${encodeURIComponent(config.timeZone)}`, { signal })

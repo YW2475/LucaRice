@@ -2,5 +2,5 @@
 # side as of the last confirmed-consistent state. Both languages carry equal authority;
 # after editing either side, bring the other along and re-record with:
 #   pnpm run verify-translation-pairing --write .agents/notes/implemented/architecture/2026-09-12-lucarice-business-data-sqlite.md
-2026-09-12-lucarice-business-data-sqlite.md: f9a266aa555f0e898a9743fa67e9545530cff282
-2026-09-12-lucarice-business-data-sqlite.zh.md: d7237663d73dd9fcd2921e4d35c56ea72ade70f1
+2026-09-12-lucarice-business-data-sqlite.md: cbe3d8487833fc5a8d643adeb45b306dd276e1ec
+2026-09-12-lucarice-business-data-sqlite.zh.md: 808e27adcf1d915d19b6441e636310f8635b3617

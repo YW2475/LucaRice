@@ -10,6 +10,7 @@ export interface AccountService {
   ownsSession(userId: string, sessionId: string): boolean
   claimSession(userId: string, sessionId: string): void
   ownerForSession(sessionId: string): string | undefined
+  localeForSession(sessionId: string): 'zh' | 'en' | 'fr'
   archivedSessionIds(userId: string): string[]
   archiveSession(userId: string, sessionId: string): string[]
   userDataDir(userId: string, area: string): string

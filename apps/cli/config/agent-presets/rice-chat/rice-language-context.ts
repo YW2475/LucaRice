@@ -1,14 +1,11 @@
 /** Inject the configured reply language into each rice-chat request. */
 
 import type { Context } from '@deepseek-ai/cordis'
-import { settingsNamespace } from '@deepseek-ai/dsh-settings'
 import type { PreStepDecision } from '@deepseek-ai/dsh-agent'
 import { createUserMessage } from '@deepseek-ai/dsh-llm'
 
 export const name = 'rice-language-context'
-export const inject = ['agents', 'settings']
-
-const LOCALE_NAMESPACE = settingsNamespace('locale')
+export const inject = ['agents', 'accounts']
 
 function configuredInstruction(preference: unknown): string | undefined {
   if (preference === 'en') {
@@ -20,11 +17,10 @@ function configuredInstruction(preference: unknown): string | undefined {
 }
 
 export function apply(ctx: Context): void {
-  ctx.on('agent/pre-step', async ({ signal }, next): Promise<PreStepDecision> => {
+  ctx.on('agent/pre-step', async ({ agent, signal }, next): Promise<PreStepDecision> => {
     const decision = await next()
     if (decision.kind === 'reject' || signal.aborted) return decision
-    const locale = ctx.settings.get(LOCALE_NAMESPACE) as { preference?: unknown } | undefined
-    const text = configuredInstruction(locale?.preference)
+    const text = configuredInstruction(ctx.accounts.localeForSession(agent.session.id))
     // Chinese is the default model language; adding a second language prompt is
     // unnecessary and makes the transcript noisier.
     if (!text) return decision
